@@ -338,7 +338,8 @@ class KaryawanController extends Controller
             return redirect()->back()->with([
                 'import_success' => true,
                 'success_count' => $import->successCount,
-                'duplicate_count' => $import->duplicateCount
+                'duplicate_count' => $import->duplicateCount,
+                'fail_count' => $import->failCount
             ]);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal import data: ' . $e->getMessage());

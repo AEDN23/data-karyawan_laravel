@@ -18,7 +18,7 @@
                         <tr class="text-center">
                             <th>No.</th>
                             <th>Foto</th>
-                            <th>NIK</th>
+                            <!-- <th>NIK</th> -->
                             <th>Nama</th>
                             <th>Tempat, Tanggal Lahir</th>
                             <th>L/P</th>
@@ -44,7 +44,7 @@
                                         </div>
                                     @endif
                                 </td>
-                                <td>{{ $k->nik }}</td>
+                                <!-- <td>{{ $k->nik }}</td> -->
                                 <td class="fw-bold">{{ $k->nama }}</td>
                                 <td>
                                     {{ $k->detail->tempat_lahir ?? '-' }},
@@ -88,7 +88,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="text-center py-4 text-muted">Belum ada data karyawan.</td>
+                                <td colspan="11" class="text-center py-4 text-muted">Belum ada data karyawan.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -210,6 +210,9 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
+            // Sembunyikan notifikasi error alert dari DataTables
+            $.fn.dataTable.ext.errMode = 'none';
+
             $('#karyawanTable').DataTable({
                 "language": {
                     "lengthMenu": "Tampilkan _MENU_ data",

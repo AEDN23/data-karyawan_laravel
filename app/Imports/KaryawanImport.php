@@ -13,6 +13,7 @@ class KaryawanImport implements ToModel, WithStartRow
 {
     public $successCount = 0;
     public $duplicateCount = 0;
+    public $failCount = 0;
 
     public function startRow(): int
     {
@@ -60,6 +61,12 @@ class KaryawanImport implements ToModel, WithStartRow
             return null;
         }
 
+        // Cek Nilai Wajib (Nama, Email, No HP)
+        if (empty($row[2]) || empty($row[3])) {
+            $this->failCount++;
+            return null;
+        }
+
         // Cek NIK & Email Unik
         $nik = !empty($row[0]) ? $row[0] : null;
         $email = !empty($row[2]) ? $row[2] : null;
@@ -78,59 +85,64 @@ class KaryawanImport implements ToModel, WithStartRow
             }
         }
 
-        return DB::transaction(function () use ($row) {
-            // 1. Simpan ke tabel karyawans
-            $karyawan = Karyawan::create([
-                'nik' => $row[0],
-                'nama' => $row[1],
-                'email' => $row[2],
-                'no_hp' => $row[3],
-                'status' => $row[4] ?? 'Bekerja',
-            ]);
+        try {
+            return DB::transaction(function () use ($row) {
+                // 1. Simpan ke tabel karyawans
+                $karyawan = Karyawan::create([
+                    'nik' => $row[0],
+                    'nama' => $row[1],
+                    'email' => $row[2],
+                    'no_hp' => $row[3],
+                    'status' => $row[4] ?? 'Bekerja',
+                ]);
 
-            // 2. Simpan ke tabel karyawan_details
-            $karyawan->detail()->create([
-                'tempat_lahir' => $row[5],
-                'tanggal_lahir' => $this->transformDate($row[6]),
-                'jenis_kelamin' => $row[7],
-                'agama' => $row[8],
-                'alamat' => $row[9],
-                'status_nikah' => $row[10],
-                'jumlah_anak' => $row[11] ?? 0,
-                'pendidikan_terakhir' => $row[12],
-                'jurusan' => $row[13],
-                'nama_instansi_pendidikan' => $row[14],
-                'pendidikan_informal' => $row[15],
-                'nama_ayah' => $row[16],
-                'tahun_lahir_ayah' => $this->transformYear($row[17]),
-                'pekerjaan_ayah' => $row[18],
-                'nama_ibu' => $row[19],
-                'tahun_lahir_ibu' => $this->transformYear($row[20]),
-                'pekerjaan_ibu' => $row[21],
-                'catatan' => $row[22],
-            ]);
+                // 2. Simpan ke tabel karyawan_details
+                $karyawan->detail()->create([
+                    'tempat_lahir' => $row[5],
+                    'tanggal_lahir' => $this->transformDate($row[6]),
+                    'jenis_kelamin' => $row[7],
+                    'agama' => $row[8],
+                    'alamat' => $row[9],
+                    'status_nikah' => $row[10],
+                    'jumlah_anak' => $row[11] ?? 0,
+                    'pendidikan_terakhir' => $row[12],
+                    'jurusan' => $row[13],
+                    'nama_instansi_pendidikan' => $row[14],
+                    'pendidikan_informal' => $row[15],
+                    'nama_ayah' => $row[16],
+                    'tahun_lahir_ayah' => $this->transformYear($row[17]),
+                    'pekerjaan_ayah' => $row[18],
+                    'nama_ibu' => $row[19],
+                    'tahun_lahir_ibu' => $this->transformYear($row[20]),
+                    'pekerjaan_ibu' => $row[21],
+                    'catatan' => $row[22],
+                ]);
 
-            // 3. Simpan ke tabel karyawan_pengalamans
-            $karyawan->pengalaman()->create([
-                'nama_perusahaan1' => $row[23],
-                'jabatan1' => $row[24],
-                'masa_kerja1' => $row[25],
-                'gaji_terakhir1' => $row[26],
-                'alasan_keluar1' => $row[27],
-                'nama_perusahaan2' => $row[28],
-                'jabatan2' => $row[29],
-                'masa_kerja2' => $row[30],
-                'gaji_terakhir2' => $row[31],
-                'alasan_keluar2' => $row[32],
-                'nama_pt_group' => $row[33],
-                'departemen_group' => $row[34],
-                'jabatan_group' => $row[35],
-                'alasan_keluar_group' => $row[36],
-            ]);
+                // 3. Simpan ke tabel karyawan_pengalamans
+                $karyawan->pengalaman()->create([
+                    'nama_perusahaan1' => $row[23],
+                    'jabatan1' => $row[24],
+                    'masa_kerja1' => $row[25],
+                    'gaji_terakhir1' => $row[26],
+                    'alasan_keluar1' => $row[27],
+                    'nama_perusahaan2' => $row[28],
+                    'jabatan2' => $row[29],
+                    'masa_kerja2' => $row[30],
+                    'gaji_terakhir2' => $row[31],
+                    'alasan_keluar2' => $row[32],
+                    'nama_pt_group' => $row[33],
+                    'departemen_group' => $row[34],
+                    'jabatan_group' => $row[35],
+                    'alasan_keluar_group' => $row[36],
+                ]);
 
-            $this->successCount++;
-            return $karyawan;
-        });
+                $this->successCount++;
+                return $karyawan;
+            });
+        } catch (\Exception $e) {
+            $this->failCount++;
+            return null;
+        }
     }
 }
 
