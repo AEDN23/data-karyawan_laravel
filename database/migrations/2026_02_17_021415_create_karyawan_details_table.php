@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('agama', 50);
-            $table->text('alamat_ktp');
-            $table->text('alamat_domisili')->nullable();
+            $table->text('alamat');
+
             $table->enum('status_nikah', ['Lajang', 'Menikah', 'Cerai']);
             $table->integer('jumlah_anak')->default(0);
 
@@ -31,11 +31,11 @@ return new class extends Migration {
             $table->text('pendidikan_informal')->nullable();
 
             // Data Orang Tua
-            $table->string('nama_ayah', 100);
-            $table->year('tahun_lahir_ayah')->nullable();
+            $table->string('nama_ayah', 100)->nullable();
+            $table->integer('tahun_lahir_ayah')->nullable();
             $table->string('pekerjaan_ayah', 100)->nullable();
-            $table->string('nama_ibu', 100);
-            $table->year('tahun_lahir_ibu')->nullable();
+            $table->string('nama_ibu', 100)->nullable();
+            $table->integer('tahun_lahir_ibu')->nullable();
             $table->string('pekerjaan_ibu', 100)->nullable();
 
             // File & Dokumen
