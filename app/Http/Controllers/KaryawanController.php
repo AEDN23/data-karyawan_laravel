@@ -42,6 +42,7 @@ class KaryawanController extends Controller
             'nama' => 'required',
             'email' => 'required|email|unique:karyawans,email',
             'no_hp' => 'required',
+            'status' => 'required|in:Bekerja,Tidak Bekerja',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required',
@@ -61,7 +62,7 @@ class KaryawanController extends Controller
             DB::beginTransaction();
 
             // 1. Simpan ke tabel karyawans (Data Inti)
-            $karyawan = Karyawan::create($request->only(['nik', 'nama', 'email', 'no_hp']));
+            $karyawan = Karyawan::create($request->only(['nik', 'nama', 'email', 'no_hp', 'status']));
 
             // 2. Pisahkan Data untuk Tabel Details
             $detailFields = [
@@ -169,6 +170,7 @@ class KaryawanController extends Controller
             'nama' => 'required',
             'email' => 'required|email|unique:karyawans,email,' . $id,
             'no_hp' => 'required',
+            'status' => 'required|in:Bekerja,Tidak Bekerja',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required',
@@ -188,7 +190,7 @@ class KaryawanController extends Controller
             DB::beginTransaction();
 
             // 1. Update Tabel Utama
-            $karyawan->update($request->only(['nik', 'nama', 'email', 'no_hp']));
+            $karyawan->update($request->only(['nik', 'nama', 'email', 'no_hp', 'status']));
 
             // 2. Update Detail
             $detailFields = [

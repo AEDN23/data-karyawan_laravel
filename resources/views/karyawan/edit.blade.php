@@ -55,6 +55,13 @@
                                     value="{{ old('email', $karyawan->email ?? '') }}" required>
                             </div>
                             <div class="col-md-6 mb-3">
+                                <label class="form-label">Status <span class="text-required">*</span></label>
+                                <select name="status" class="form-select" required>
+                                    <option value="Bekerja" {{ old('status', $karyawan->status ?? '') == 'Bekerja' ? 'selected' : '' }}>Bekerja</option>
+                                    <option value="Tidak Bekerja" {{ old('status', $karyawan->status ?? '') == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Jenis Kelamin <span class="text-required">*</span></label>
                                 <div class="mt-2">
                                     <div class="form-check form-check-inline">

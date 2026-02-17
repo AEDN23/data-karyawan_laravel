@@ -28,7 +28,12 @@
                 </div>
                 <div>
                     <h3 class="fw-bold mb-1">{{ $karyawan->nama }}</h3>
-                    <p class="text-muted mb-2">NIK: {{ $karyawan->nik }}</p>
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <p class="text-muted mb-0">NIK: {{ $karyawan->nik }}</p>
+                        <span class="badge {{ $karyawan->status == 'Bekerja' ? 'bg-success' : 'bg-danger' }}">
+                            {{ $karyawan->status }}
+                        </span>
+                    </div>
                     <div class="d-flex gap-4">
                         <span class="small"><i class="fas fa-phone text-info"></i> {{ $karyawan->no_hp }}</span>
                         <span class="small"><i class="fas fa-envelope text-info"></i> {{ $karyawan->email }}</span>

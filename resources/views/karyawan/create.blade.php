@@ -55,6 +55,13 @@
                                     value="{{ old('email', $karyawan->email ?? '') }}" required>
                             </div>
                             <div class="col-md-6 mb-3">
+                                <label class="form-label">Status <span class="text-required">*</span></label>
+                                <select name="status" class="form-select" required>
+                                    <option value="Bekerja" {{ old('status', $karyawan->status ?? 'Bekerja') == 'Bekerja' ? 'selected' : '' }}>Bekerja</option>
+                                    <option value="Tidak Bekerja" {{ old('status', $karyawan->status ?? '') == 'Tidak Bekerja' ? 'selected' : '' }}>Tidak Bekerja</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Jenis Kelamin <span class="text-required">*</span></label>
                                 <div class="mt-2">
                                     <div class="form-check form-check-inline">
@@ -342,25 +349,25 @@
                                     ] as $pt)
                                         <option value="{{ $pt }}" {{ (old('nama_pt_group', $karyawan->pengalaman->nama_pt_group ?? '') == $pt) ? 'selected' : '' }}>{{ $pt }}</option>
                                 @endforeach
-                                </select>
-                            <input type="text" name="departemen_group" class="form-control border-info mb-2"
-                                placeholder="Departemen"
-                                value="{{ old('departemen_group', $karyawan->pengalaman->departemen_group ?? '') }}">
-                            <input type="text" name="jabatan_group" class="form-control border-info mb-2"
-                                placeholder="Jabatan"
-                                value="{{ old('jabatan_group', $karyawan->pengalaman->jabatan_group ?? '') }}">
-                            <textarea name="alasan_keluar_group" class="form-control border-info" rows="2"
-                                placeholder="Alasan Resign">{{ old('alasan_keluar_group', $karyawan->pengalaman->alasan_keluar_group ?? '') }}</textarea>
+                                    </select>
+                        <input type="text" name="departemen_group" class="form-control border-info mb-2"
+                            placeholder="Departemen"
+                            value="{{ old('departemen_group', $karyawan->pengalaman->departemen_group ?? '') }}">
+                        <input type="text" name="jabatan_group" class="form-control border-info mb-2"
+                            placeholder="Jabatan"
+                            value="{{ old('jabatan_group', $karyawan->pengalaman->jabatan_group ?? '') }}">
+                        <textarea name="alasan_keluar_group" class="form-control border-info" rows="2"
+                            placeholder="Alasan Resign">{{ old('alasan_keluar_group', $karyawan->pengalaman->alasan_keluar_group ?? '') }}</textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="text-end border-top pt-3">
-                        <button type="submit" class="btn btn-info text-white px-5 shadow-sm">
-                            <i class="fas fa-save me-2"></i> {{ isset($karyawan) ? 'Update Data' : 'Simpan Data' }}
-                        </button>
-                    </div>
-                </form>
+                        <div class="text-end border-top pt-3">
+                            <button type="submit" class="btn btn-info text-white px-5 shadow-sm">
+                                <i class="fas fa-save me-2"></i> {{ isset($karyawan) ? 'Update Data' : 'Simpan Data' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 @endsection

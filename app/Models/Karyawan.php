@@ -9,7 +9,7 @@ class Karyawan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nik', 'nama', 'email', 'no_hp'];
+    protected $fillable = ['nik', 'nama', 'email', 'no_hp', 'status'];
 
     /**
      * Relasi ke KaryawanDetail (1 to 1)

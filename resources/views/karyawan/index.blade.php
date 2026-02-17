@@ -25,6 +25,7 @@
                             <th>Alamat</th>
                             <th>Referensi</th>
                             <th>No. HP</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -59,6 +60,11 @@
                                     {{ $k->pengalaman->nama_pt_group ?? '-' }}
                                 </td>
                                 <td>{{ $k->no_hp }}</td>
+                                <td class="text-center">
+                                    <span class="badge {{ $k->status == 'Bekerja' ? 'bg-success' : 'bg-danger' }}">
+                                        {{ $k->status }}
+                                    </span>
+                                </td>
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
                                         <a href="{{ route('karyawan.show', $k->id) }}" class="btn btn-success btn-xs"
@@ -229,7 +235,7 @@
                 ],
                 "columnDefs": [{
                     "orderable": false,
-                    "targets": [1, 9] // Foto and Aksi columns
+                    "targets": [1, 10] // Foto and Aksi columns
                 }]
             });
         });
