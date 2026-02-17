@@ -17,6 +17,7 @@ class KaryawanTemplateExport implements WithHeadings, ShouldAutoSize, WithStyles
             'Nama',
             'Email',
             'No HP',
+            'Status (Bekerja/Tidak Bekerja)',
             'Tempat Lahir',
             'Tanggal Lahir (YYYY-MM-DD)',
             'Jenis Kelamin (Laki-laki/Perempuan)',

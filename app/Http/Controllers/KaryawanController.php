@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Karyawan;
 use App\Models\KaryawanDetail;
 use App\Models\KaryawanPengalaman;
@@ -93,17 +94,24 @@ class KaryawanController extends Controller
             }
 
             // Handle upload file
+            $namaSlug = Str::slug($request->nama);
+            $tgl = date('dmY-His');
+
             if ($request->hasFile('foto')) {
-                $detailData['foto'] = $request->file('foto')->store('uploads/foto', 'public');
+                $ext = $request->file('foto')->getClientOriginalExtension();
+                $detailData['foto'] = $request->file('foto')->storeAs('uploads/foto', "foto-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('cv')) {
-                $detailData['cv'] = $request->file('cv')->store('uploads/cv', 'public');
+                $ext = $request->file('cv')->getClientOriginalExtension();
+                $detailData['cv'] = $request->file('cv')->storeAs('uploads/cv', "cv-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('sertifikat')) {
-                $detailData['sertifikat'] = $request->file('sertifikat')->store('uploads/sertifikat', 'public');
+                $ext = $request->file('sertifikat')->getClientOriginalExtension();
+                $detailData['sertifikat'] = $request->file('sertifikat')->storeAs('uploads/sertifikat', "sertifikat-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('dokumen_lain')) {
-                $detailData['dokumen_lain'] = $request->file('dokumen_lain')->store('uploads/dokumen', 'public');
+                $ext = $request->file('dokumen_lain')->getClientOriginalExtension();
+                $detailData['dokumen_lain'] = $request->file('dokumen_lain')->storeAs('uploads/dokumen', "dokumen-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
 
             $karyawan->detail()->create($detailData);
@@ -220,29 +228,36 @@ class KaryawanController extends Controller
                 $detailData['agama'] = $request->agama_lainnya;
             }
 
+            $namaSlug = Str::slug($request->nama);
+            $tgl = date('dmY-His');
+
             if ($request->hasFile('foto')) {
                 if ($karyawan->detail->foto && Storage::disk('public')->exists($karyawan->detail->foto)) {
                     Storage::disk('public')->delete($karyawan->detail->foto);
                 }
-                $detailData['foto'] = $request->file('foto')->store('uploads/foto', 'public');
+                $ext = $request->file('foto')->getClientOriginalExtension();
+                $detailData['foto'] = $request->file('foto')->storeAs('uploads/foto', "foto-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('cv')) {
                 if ($karyawan->detail->cv && Storage::disk('public')->exists($karyawan->detail->cv)) {
                     Storage::disk('public')->delete($karyawan->detail->cv);
                 }
-                $detailData['cv'] = $request->file('cv')->store('uploads/cv', 'public');
+                $ext = $request->file('cv')->getClientOriginalExtension();
+                $detailData['cv'] = $request->file('cv')->storeAs('uploads/cv', "cv-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('sertifikat')) {
                 if ($karyawan->detail->sertifikat && Storage::disk('public')->exists($karyawan->detail->sertifikat)) {
                     Storage::disk('public')->delete($karyawan->detail->sertifikat);
                 }
-                $detailData['sertifikat'] = $request->file('sertifikat')->store('uploads/sertifikat', 'public');
+                $ext = $request->file('sertifikat')->getClientOriginalExtension();
+                $detailData['sertifikat'] = $request->file('sertifikat')->storeAs('uploads/sertifikat', "sertifikat-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
             if ($request->hasFile('dokumen_lain')) {
                 if ($karyawan->detail->dokumen_lain && Storage::disk('public')->exists($karyawan->detail->dokumen_lain)) {
                     Storage::disk('public')->delete($karyawan->detail->dokumen_lain);
                 }
-                $detailData['dokumen_lain'] = $request->file('dokumen_lain')->store('uploads/dokumen', 'public');
+                $ext = $request->file('dokumen_lain')->getClientOriginalExtension();
+                $detailData['dokumen_lain'] = $request->file('dokumen_lain')->storeAs('uploads/dokumen', "dokumen-{$namaSlug}-{$tgl}.{$ext}", 'public');
             }
 
             $karyawan->detail()->update($detailData);
