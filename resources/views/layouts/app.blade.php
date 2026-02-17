@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -133,14 +135,21 @@
     </div>
 
     <footer>
-        © 2025 · <a href="http://www.elastormix.co.id" target="_blank" class="text-decoration-none"
-            style="color:#17a2b8">www.elastormix.co.id</a>
+        © 2025 · <a href="http://www.elastomix.co.id" target="_blank" class="text-decoration-none"
+            style="color:#17a2b8">www.elastomix.co.id</a>
     </footer>
 
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @stack('scripts')
 
     <script>
         // Notifikasi Sukses
@@ -163,18 +172,32 @@
             });
         @endif
 
+        // Notifikasi Import Selesai (Detail)
+        @if(session('import_success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Import Selesai! 🥳',
+                html: `
+                                <p class="mb-1">Data berhasil diimpor.</p>
+                                <p class="fw-bold fw-large">Sukses: {{ session('success_count') }}, Duplikat: {{ session('duplicate_count') }}</p>
+                            `,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#6f42c1'
+            });
+        @endif
+
         // Notifikasi Error Validasi
         @if ($errors->any())
             Swal.fire({
                 icon: 'error',
                 title: 'Kesalahan Input!',
                 html: `
-                        <ul class="text-start">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    `,
+                                    <ul class="text-start">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                `,
             });
         @endif
     </script>

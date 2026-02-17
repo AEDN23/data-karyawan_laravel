@@ -93,7 +93,7 @@
                             <div class="mb-3">
                                 <div id="imagePreviewContainer">
                                     @if(isset($karyawan) && $karyawan->detail->foto)
-                                        <img src="{{ asset('public/storage/' . $karyawan->detail->foto) }}" id="previewFoto"
+                                        <img src="{{ asset('storage/' . $karyawan->detail->foto) }}" id="previewFoto"
                                             class="img-thumbnail mb-2" style="height: 200px; width: 100%; object-fit: cover;">
                                     @else
                                         <div id="placeholderFoto"

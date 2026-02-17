@@ -8,6 +8,9 @@ use App\Models\KaryawanPengalaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\KaryawanTemplateExport;
+use App\Imports\KaryawanImport;
 
 class KaryawanController extends Controller
 {
@@ -292,5 +295,36 @@ class KaryawanController extends Controller
 
         $karyawan->delete(); // Cascade akan otomatis hapus detail & pengalaman
         return redirect()->back()->with('success', 'Data berhasil dihapus');
+    }
+
+    /**
+     * Download Template Excel
+     */
+    public function exportTemplate()
+    {
+        return Excel::download(new KaryawanTemplateExport, 'template_import_karyawan.xlsx');
+    }
+
+    /**
+     * Import Data Excel
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        try {
+            $import = new KaryawanImport();
+            Excel::import($import, $request->file('file'));
+
+            return redirect()->back()->with([
+                'import_success' => true,
+                'success_count' => $import->successCount,
+                'duplicate_count' => $import->duplicateCount
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal import data: ' . $e->getMessage());
+        }
     }
 }
