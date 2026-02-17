@@ -18,7 +18,6 @@
                         <tr class="text-center">
                             <th>No.</th>
                             <th>Foto</th>
-                            <!-- <th>NIK</th> -->
                             <th>Nama</th>
                             <th>Tempat, Tanggal Lahir</th>
                             <th>L/P</th>
@@ -44,7 +43,6 @@
                                         </div>
                                     @endif
                                 </td>
-                                <!-- <td>{{ $k->nik }}</td> -->
                                 <td class="fw-bold">{{ $k->nama }}</td>
                                 <td>
                                     {{ $k->detail->tempat_lahir ?? '-' }},
@@ -238,7 +236,7 @@
                 ],
                 "columnDefs": [{
                     "orderable": false,
-                    "targets": [1, 10] // Foto and Aksi columns
+                    "targets": [1, 9] // Foto and Aksi columns
                 }]
             });
         });
