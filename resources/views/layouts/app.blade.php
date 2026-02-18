@@ -110,8 +110,60 @@
             <a class="navbar-brand" href="{{ route('karyawan.index') }}">
                 <i class="fas fa-user-circle"></i> Data Calon Karyawan
             </a>
-            <div class="d-flex gap-2">
-                @yield('actions')
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-flex gap-2">
+                    @yield('actions')
+                </div>
+
+                @auth
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 border shadow-sm"
+                            type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="rounded-circle bg-info d-flex align-items-center justify-content-center text-white"
+                                style="width: 30px; height: 30px;">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="text-start d-none d-sm-block">
+                                <div class="fw-bold" style="font-size: 0.8rem; line-height: 1;">{{ Auth::user()->name }}
+                                </div>
+                                <small class="text-muted"
+                                    style="font-size: 0.7rem;">{{ ucfirst(Auth::user()->role) }}</small>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="userDropdown">
+                            <li>
+                                <h6 class="dropdown-header small text-muted">User Settings</h6>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2" href="#">
+                                    <i class="fas fa-cog me-2 text-secondary"></i> Pengaturan Akun
+                                </a>
+                            </li>
+                            @if(in_array(Auth::user()->role, ['superadmin']))
+                                <li>
+                                    <a class="dropdown-item py-2" href="{{ route('users.index') }}">
+                                        <i class="fas fa-users-cog me-2 text-secondary"></i> Manajemen User
+                                    </a>
+                                </li>
+                            @endif
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item py-2 text-danger">
+                                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
+                    </a>
+                @endauth
             </div>
         </div>
     </nav>
@@ -178,9 +230,9 @@
                 icon: 'success',
                 title: 'Import Selesai! 🥳',
                 html: `
-                                    <p class="mb-1">Data berhasil diimpor.</p>
-                                    <p class="fw-bold fw-large">Sukses: {{ session('success_count') }}, Duplikat: {{ session('duplicate_count') }}, Gagal: {{ session('fail_count') }}</p>
-                                `,
+                                                        <p class="mb-1">Data berhasil diimpor.</p>
+                                                        <p class="fw-bold fw-large">Sukses: {{ session('success_count') }}, Duplikat: {{ session('duplicate_count') }}, Gagal: {{ session('fail_count') }}</p>
+                                                    `,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#6f42c1'
             });
@@ -192,12 +244,12 @@
                 icon: 'error',
                 title: 'Kesalahan Input!',
                 html: `
-                                        <ul class="text-start">
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    `,
+                                                            <ul class="text-start">
+                                                                @foreach ($errors->all() as $error)
+                                                                    <li>{{ $error }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        `,
             });
         @endif
     </script>

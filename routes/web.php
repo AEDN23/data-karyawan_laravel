@@ -12,7 +12,16 @@ Route::get('/', function () {
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+// Route yang butuh Login
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users', [AuthController::class, 'index'])->name('users.index');
+    Route::put('/users/{id}', [AuthController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [AuthController::class, 'destroy'])->name('users.destroy');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
 // Route Karyawan (Dibuat publik kembali)
 
