@@ -125,8 +125,8 @@
                             <p class="text-muted small mb-3">Agar proses import berjalan lancar, <strong>WAJIB</strong>
                                 menggunakan template yang disediakan:</p>
 
-                            <a href="{{ route('karyawan.export-template') }}"
-                                class="btn btn-success btn-sm mb-4 px-3 shadow-sm">
+                            <a href="{{ url('public/storage/template_import_karyawan.xlsx') }}"
+                                class="btn btn-success btn-sm mb-4 px-3 shadow-sm" download>
                                 <i class="fas fa-download me-2"></i> Download Template Excel
                             </a>
 
