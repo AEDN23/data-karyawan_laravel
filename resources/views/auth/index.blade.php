@@ -6,9 +6,10 @@
             <div>
                 <i class="fas fa-users-cog me-2"></i> Manajemen User (Administrator)
             </div>
-            <a href="{{ route('register') }}" class="btn btn-outline-light btn-sm shadow-sm">
+            <button type="button" class="btn btn-outline-light btn-sm shadow-sm" data-bs-toggle="modal"
+                data-bs-target="#addUserModal">
                 <i class="fas fa-plus me-1"></i> Tambah User
-            </a>
+            </button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -63,6 +64,59 @@
         </div>
     </div>
 
+    <!-- Modal Tambah User -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header text-white" style="background-color: #28a745;">
+                    <h5 class="modal-title" id="addUserModalLabel">
+                        <i class="fas fa-user-plus me-2"></i> Tambah User Baru
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form action="{{ route('users.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nama Lengkap</label>
+                            <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Masukkan email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Minimal 8 karakter"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" class="form-control"
+                                placeholder="Ulangi password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Role</label>
+                            <select name="role" class="form-select" required>
+                                <option value="user">USER</option>
+                                <option value="admin">ADMIN</option>
+                                <option value="superadmin">SUPERADMIN</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 p-4 pt-0">
+                        <button type="button" class="btn btn-secondary shadow-sm px-4"
+                            data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success text-white shadow-sm px-4">
+                            <i class="fas fa-save me-1"></i> Simpan User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Edit User -->
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -88,8 +142,10 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Password Baru</label>
-                            <input type="password" name="password" id="edit_password" class="form-control" placeholder="Kosongkan jika tidak ingin mengubah password">
-                            <small class="text-muted" style="font-size: 0.75rem;">*Isi jika ingin mengganti password user ini.</small>
+                            <input type="password" name="password" id="edit_password" class="form-control"
+                                placeholder="Kosongkan jika tidak ingin mengubah password">
+                            <small class="text-muted" style="font-size: 0.75rem;">*Isi jika ingin mengganti password user
+                                ini.</small>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Role</label>

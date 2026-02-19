@@ -18,16 +18,16 @@ Route::post('/register', [AuthController::class, 'register']);
 // Route yang butuh Login
 Route::middleware(['auth'])->group(function () {
     Route::get('/users', [AuthController::class, 'index'])->name('users.index');
+    Route::post('/users', [AuthController::class, 'store'])->name('users.store');
     Route::put('/users/{id}', [AuthController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [AuthController::class, 'destroy'])->name('users.destroy');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// Route Karyawan (Dibuat publik kembali)
 
 // CARA AKTIFKAN LOGIN: Lepas komentar (uncomment) baris middleware di bawah
-Route::middleware(['auth'])->group(function () {
-    Route::get('karyawan/export-template', [KaryawanController::class, 'exportTemplate'])->name('karyawan.export-template');
-    Route::post('karyawan/import', [KaryawanController::class, 'import'])->name('karyawan.import');
-    Route::resource('karyawan', KaryawanController::class);
-});
+// Route::middleware(['auth'])->group(function () {
+Route::get('karyawan/export-template', [KaryawanController::class, 'exportTemplate'])->name('karyawan.export-template');
+Route::post('karyawan/import', [KaryawanController::class, 'import'])->name('karyawan.import');
+Route::resource('karyawan', KaryawanController::class);
+// });

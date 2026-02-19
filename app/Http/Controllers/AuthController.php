@@ -92,6 +92,37 @@ class AuthController extends Controller
     }
 
     /**
+     * Store data user baru (Hanya Admin)
+     */
+    public function store(Request $request)
+    {
+        // Proteksi Role: Hanya Superadmin
+        if (!Auth::check() || Auth::user()->role !== 'superadmin') {
+            return redirect()->route('karyawan.index')->with('error', 'Anda tidak memiliki hak akses untuk aksi tersebut.');
+        }
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'in:user,admin,superadmin'],
+        ]);
+
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+
+            return redirect()->back()->with('success', 'User ' . $request->name . ' berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan user: ' . $e->getMessage());
+        }
+    }
+
+    /**
      * Update data user (Hanya Admin)
      */
     public function update(Request $request, $id)

@@ -52,7 +52,7 @@
                                     {{ ($k->detail && $k->detail->jenis_kelamin == 'Laki-laki') ? 'L' : (($k->detail && $k->detail->jenis_kelamin == 'Perempuan') ? 'P' : '-') }}
                                 </td>
                                 <td style="max-width: 250px; font-size: 0.85rem;">
-                                    {{ $k->detail->alamat_ktp ?? '-' }}
+                                    {{ $k->detail->alamat ?? '-' }}
                                 </td>
                                 <td style="font-size: 0.85rem;">
                                     {{ $k->pengalaman->nama_pt_group ?? '-' }}
