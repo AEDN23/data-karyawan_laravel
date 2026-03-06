@@ -134,11 +134,6 @@
                             <li>
                                 <h6 class="dropdown-header small text-muted">User Settings</h6>
                             </li>
-                            <li>
-                                <a class="dropdown-item py-2" href="#">
-                                    <i class="fas fa-cog me-2 text-secondary"></i> Pengaturan Akun
-                                </a>
-                            </li>
                             @if(in_array(Auth::user()->role, ['superadmin']))
                                 <li>
                                     <a class="dropdown-item py-2" href="{{ route('users.index') }}">
@@ -230,9 +225,9 @@
                 icon: 'success',
                 title: 'Import Selesai! 🥳',
                 html: `
-                                                        <p class="mb-1">Data berhasil diimpor.</p>
-                                                        <p class="fw-bold fw-large">Sukses: {{ session('success_count') }}, Duplikat: {{ session('duplicate_count') }}, Gagal: {{ session('fail_count') }}</p>
-                                                    `,
+                                                            <p class="mb-1">Data berhasil diimpor.</p>
+                                                            <p class="fw-bold fw-large">Sukses: {{ session('success_count') }}, Duplikat: {{ session('duplicate_count') }}, Gagal: {{ session('fail_count') }}</p>
+                                                        `,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#6f42c1'
             });
@@ -244,12 +239,12 @@
                 icon: 'error',
                 title: 'Kesalahan Input!',
                 html: `
-                                                            <ul class="text-start">
-                                                                @foreach ($errors->all() as $error)
-                                                                    <li>{{ $error }}</li>
-                                                                @endforeach
-                                                            </ul>
-                                                        `,
+                                                                <ul class="text-start">
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>{{ $error }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            `,
             });
         @endif
     </script>

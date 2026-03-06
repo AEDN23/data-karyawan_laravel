@@ -37,6 +37,17 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label fw-bold">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-user text-muted"></i>
+                                </span>
+                                <input type="text" name="username" class="form-control bg-light border-start-0"
+                                    placeholder="Buat username unik" value="{{ old('username') }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label fw-bold">Email</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">

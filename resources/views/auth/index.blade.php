@@ -18,6 +18,7 @@
                         <tr class="text-center">
                             <th>No.</th>
                             <th>Nama</th>
+                            <th>Username</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Terdaftar Pada</th>
@@ -29,6 +30,7 @@
                             <tr>
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td class="fw-bold">{{ $u->name }}</td>
+                                <td>{{ $u->username }}</td>
                                 <td>{{ $u->email }}</td>
                                 <td class="text-center">
                                     @if($u->role == 'superadmin')
@@ -44,8 +46,9 @@
                                 </td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm btn-edit" data-id="{{ $u->id }}"
-                                        data-name="{{ $u->name }}" data-email="{{ $u->email }}" data-role="{{ $u->role }}"
-                                        data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                        data-name="{{ $u->name }}" data-username="{{ $u->username }}"
+                                        data-email="{{ $u->email }}" data-role="{{ $u->role }}" data-bs-toggle="modal"
+                                        data-bs-target="#editUserModal">
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
                                     <button class="btn btn-danger btn-sm btn-delete" data-id="{{ $u->id }}">
@@ -55,7 +58,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-4 text-muted">Belum ada data user admin.</td>
+                                <td colspan="7" class="text-center py-4 text-muted">Belum ada data user admin.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -81,6 +84,11 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nama Lengkap</label>
                             <input type="text" name="name" class="form-control" placeholder="Masukkan nama" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Masukkan username"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Email</label>
@@ -135,6 +143,10 @@
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nama Lengkap</label>
                             <input type="text" name="name" id="edit_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Username</label>
+                            <input type="text" name="username" id="edit_username" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Email</label>
@@ -199,11 +211,13 @@
             $('.btn-edit').on('click', function () {
                 const id = $(this).data('id');
                 const name = $(this).data('name');
+                const username = $(this).data('username');
                 const email = $(this).data('email');
                 const role = $(this).data('role');
 
                 // Set form values
                 $('#edit_name').val(name);
+                $('#edit_username').val(username);
                 $('#edit_email').val(email);
                 $('#edit_role').val(role);
 

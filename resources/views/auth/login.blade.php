@@ -26,13 +26,13 @@
                         @endif
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Email</label>
+                            <label class="form-label fw-bold">Username</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light border-end-0">
-                                    <i class="fas fa-envelope text-muted"></i>
+                                    <i class="fas fa-user text-muted"></i>
                                 </span>
-                                <input type="email" name="email" class="form-control bg-light border-start-0"
-                                    placeholder="Masukkan email" value="{{ old('email') }}" required>
+                                <input type="text" name="username" class="form-control bg-light border-start-0"
+                                    placeholder="Masukkan username" value="{{ old('username') }}" required>
                             </div>
                         </div>
 
