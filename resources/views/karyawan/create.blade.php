@@ -211,14 +211,14 @@
                     </div>
 
                     <!-- Status Keluarga -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="section-title">
                             <i class="fas fa-users"></i> Data Keluarga & Orang Tua
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Status Nikah <span class="text-required">*</span></label>
-                                <select name="status_nikah" class="form-select" required>
+                                <label class="form-label">Status Nikah</label>
+                                <select name="status_nikah" class="form-select">
                                     <option value="">-- Pilih Status --</option>
                                     @foreach(['Lajang', 'Menikah', 'Cerai'] as $s)
                                         <option value="{{ $s }}" {{ (old('status_nikah', $karyawan->detail->status_nikah ?? 'Lajang') == $s) ? 'selected' : '' }}>{{ $s }}</option>
@@ -226,12 +226,12 @@
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Jumlah Anak <span class="text-required">*</span></label>
+                                <label class="form-label">Jumlah Anak</label>
                                 <input type="number" name="jumlah_anak" class="form-control"
-                                    value="{{ old('jumlah_anak', $karyawan->detail->jumlah_anak ?? 0) }}" required>
-                            </div>
+                                    value="{{ old('jumlah_anak', $karyawan->detail->jumlah_anak ?? 0) }}">
+                            </div> -->
                             <!-- Ayah -->
-                            <div class="col-md-4 mb-3">
+                            <!-- <div class="col-md-4 mb-3">
                                 <label class="form-label">Nama Ayah</label>
                                 <input type="text" name="nama_ayah" class="form-control"
                                     value="{{ old('nama_ayah', $karyawan->detail->nama_ayah ?? '') }}">
@@ -246,9 +246,9 @@
                                 <label class="form-label">Pekerjaan Ayah</label>
                                 <input type="text" name="pekerjaan_ayah" class="form-control"
                                     value="{{ old('pekerjaan_ayah', $karyawan->detail->pekerjaan_ayah ?? '') }}">
-                            </div>
+                            </div> -->
                             <!-- Ibu -->
-                            <div class="col-md-4 mb-3">
+                            <!-- <div class="col-md-4 mb-3">
                                 <label class="form-label">Nama Ibu</label>
                                 <input type="text" name="nama_ibu" class="form-control"
                                     value="{{ old('nama_ibu', $karyawan->detail->nama_ibu ?? '') }}">
@@ -263,7 +263,7 @@
                                 <label class="form-label">Pekerjaan Ibu</label>
                                 <input type="text" name="pekerjaan_ibu" class="form-control"
                                     value="{{ old('pekerjaan_ibu', $karyawan->detail->pekerjaan_ibu ?? '') }}">
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

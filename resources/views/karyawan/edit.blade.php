@@ -180,8 +180,8 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Status Nikah <span class="text-required">*</span></label>
-                                <select name="status_nikah" class="form-select" required>
+                                <label class="form-label">Status Nikah</label>
+                                <select name="status_nikah" class="form-select">
                                     <option value="">-- Pilih Status --</option>
                                     @foreach(['Lajang', 'Menikah', 'Cerai'] as $s)
                                         <option value="{{ $s }}" {{ (old('status_nikah', $karyawan->detail->status_nikah ?? '') == $s) ? 'selected' : '' }}>{{ $s }}</option>
@@ -189,9 +189,9 @@
                                 </select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Jumlah Anak <span class="text-required">*</span></label>
+                                <label class="form-label">Jumlah Anak</label>
                                 <input type="number" name="jumlah_anak" class="form-control"
-                                    value="{{ old('jumlah_anak', $karyawan->detail->jumlah_anak ?? 0) }}" required>
+                                    value="{{ old('jumlah_anak', $karyawan->detail->jumlah_anak ?? 0) }}">
                             </div>
                             <!-- Ayah -->
                             <div class="col-md-4 mb-3">

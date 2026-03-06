@@ -8,6 +8,7 @@ use App\Models\KaryawanDetail;
 use App\Models\KaryawanPengalaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanTemplateExport;
@@ -20,7 +21,7 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $karyawans = Karyawan::with(['detail', 'pengalaman'])->latest()->get();
+        $karyawans = Karyawan::with(['detail', 'pengalaman', 'creator'])->latest()->get();
         return view('karyawan.index', compact('karyawans'));
     }
 
@@ -50,8 +51,8 @@ class KaryawanController extends Controller
             'agama' => 'required',
             'agama_lainnya' => 'required_if:agama,Lainnya',
             'alamat' => 'required',
-            'status_nikah' => 'required',
-            'jumlah_anak' => 'required|integer|min:0',
+            'status_nikah' => 'nullable',
+            'jumlah_anak' => 'nullable|integer|min:0',
             'pendidikan_terakhir' => 'required',
             'jurusan' => 'required',
             'nama_instansi_pendidikan' => 'required',
@@ -63,7 +64,10 @@ class KaryawanController extends Controller
             DB::beginTransaction();
 
             // 1. Simpan ke tabel karyawans (Data Inti)
-            $karyawan = Karyawan::create($request->only(['nik', 'nama', 'email', 'no_hp', 'status']));
+            $intiData = $request->only(['nik', 'nama', 'email', 'no_hp', 'status']);
+            $intiData['created_by'] = Auth::id();
+
+            $karyawan = Karyawan::create($intiData);
 
             // 2. Pisahkan Data untuk Tabel Details
             $detailFields = [
@@ -185,8 +189,8 @@ class KaryawanController extends Controller
             'agama' => 'required',
             'agama_lainnya' => 'required_if:agama,Lainnya',
             'alamat' => 'required',
-            'status_nikah' => 'required',
-            'jumlah_anak' => 'required|integer|min:0',
+            'status_nikah' => 'nullable',
+            'jumlah_anak' => 'nullable|integer|min:0',
             'pendidikan_terakhir' => 'required',
             'jurusan' => 'required',
             'nama_instansi_pendidikan' => 'required',

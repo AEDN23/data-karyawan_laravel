@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('actions')
-    <a href="{{ route('karyawan.create') }}" class="btn btn-tambah btn-sm">
-        <i class="fas fa-plus"></i> Tambah
-    </a>
-    <button class="btn btn-import btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
-        <i class="fas fa-file-import"></i> Import
-    </button>
+    @auth
+        <a href="{{ route('karyawan.create') }}" class="btn btn-tambah btn-sm">
+            <i class="fas fa-plus"></i> Tambah
+        </a>
+        <button class="btn btn-import btn-sm" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="fas fa-file-import"></i> Import
+        </button>
+    @endauth
 @endsection
 
 @section('content')
@@ -25,6 +27,7 @@
                             <th>Referensi</th>
                             <th>No. HP</th>
                             <th>Status</th>
+                            <th>Input Oleh</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -63,24 +66,29 @@
                                         {{ $k->status }}
                                     </span>
                                 </td>
+                                <td class="text-center small">
+                                    {{ $k->creator->name ?? '-' }}
+                                </td>
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
                                         <a href="{{ route('karyawan.show', $k->id) }}" class="btn btn-success btn-xs"
                                             title="Detail">
                                             <i class="fas fa-file-alt"></i>
                                         </a>
-                                        <a href="{{ route('karyawan.edit', $k->id) }}" class="btn btn-info btn-xs text-white"
-                                            title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <form action="{{ route('karyawan.destroy', $k->id) }}" method="POST"
-                                            onsubmit="return confirm('Hapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-xs" title="Hapus">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        @auth
+                                            <a href="{{ route('karyawan.edit', $k->id) }}" class="btn btn-info btn-xs text-white"
+                                                title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('karyawan.destroy', $k->id) }}" method="POST"
+                                                onsubmit="return confirm('Hapus data ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-xs" title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endauth
                                     </div>
                                 </td>
                             </tr>

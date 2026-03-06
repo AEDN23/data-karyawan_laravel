@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class KaryawanImport implements ToModel, WithStartRow
@@ -94,6 +95,7 @@ class KaryawanImport implements ToModel, WithStartRow
                     'email' => $row[2],
                     'no_hp' => $row[3],
                     'status' => $row[4] ?? 'Bekerja',
+                    'created_by' => Auth::id(),
                 ]);
 
                 // 2. Simpan ke tabel karyawan_details

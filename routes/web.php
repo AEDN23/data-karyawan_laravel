@@ -25,9 +25,15 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-// CARA AKTIFKAN LOGIN: Lepas komentar (uncomment) baris middleware di bawah
-// Route::middleware(['auth'])->group(function () {
-Route::get('karyawan/export-template', [KaryawanController::class, 'exportTemplate'])->name('karyawan.export-template');
-Route::post('karyawan/import', [KaryawanController::class, 'import'])->name('karyawan.import');
-Route::resource('karyawan', KaryawanController::class);
-// });
+// Route Karyawan - Publik (Hanya Lihat)
+Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan.index');
+
+// Route Karyawan - Wajib Login (Form & Aksi)
+Route::middleware(['auth'])->group(function () {
+    Route::get('karyawan/export-template', [KaryawanController::class, 'exportTemplate'])->name('karyawan.export-template');
+    Route::post('karyawan/import', [KaryawanController::class, 'import'])->name('karyawan.import');
+    Route::resource('karyawan', KaryawanController::class)->except(['index', 'show']);
+});
+
+// Route Karyawan - Show (Wildcard diletakkan paling bawah agar tidak bentrok dengan 'create' dll)
+Route::get('/karyawan/{karyawan}', [KaryawanController::class, 'show'])->name('karyawan.show');

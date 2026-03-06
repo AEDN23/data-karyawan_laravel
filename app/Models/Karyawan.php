@@ -9,7 +9,15 @@ class Karyawan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nik', 'nama', 'email', 'no_hp', 'status'];
+    protected $fillable = ['nik', 'nama', 'email', 'no_hp', 'status', 'created_by'];
+
+    /**
+     * Relasi ke User yang menginputkan
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     /**
      * Relasi ke KaryawanDetail (1 to 1)
